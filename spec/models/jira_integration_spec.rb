@@ -11,7 +11,7 @@ describe JIRAIntegration do
   it 'should not save integration when incorrect credentials were provided' do
     JIRAIntegration.count.should == 0
     pi = JIRAIntegration.new
-    pi.email = 'wrong_email'
+    pi.username = 'wrong_username'
     pi.password = 'wrong_password'
     pi.save
     JIRAIntegration.count.should == 0
@@ -21,7 +21,7 @@ describe JIRAIntegration do
     JIRAIntegration.count.should == 0
     pi = JIRAIntegration.new
     pi.user = FactoryGirl.create :user
-    pi.email = 'correct_email@example.com'
+    pi.username = 'correct_username@example.com'
     pi.password = 'correct_password'
     pi.save
     JIRAIntegration.count.should == 1
@@ -29,7 +29,7 @@ describe JIRAIntegration do
 
     pi = JIRAIntegration.new
     pi.user = FactoryGirl.create :user
-    pi.email = 'correct_email'
+    pi.username = 'correct_username'
     pi.password = 'correct_password'
     pi.save.should be_false
     pi.errors[:api_key].should be_present
