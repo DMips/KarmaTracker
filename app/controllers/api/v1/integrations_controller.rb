@@ -203,6 +203,62 @@ module Api
       end
 
       ##
+      # creates new JIRA integration
+      #
+      # POST /api/v1/integrations/git_hub
+      #
+      # params:
+      #   token - KarmaTracker API token
+      #   integration[api_key] - GitHub API token
+      #   integration[username] - username assigned to GH account
+      #   integration[password] - password assigned to GH account
+      #
+      # = Examples
+      #
+      #   resp = conn.post("/api/v1/integrations/git_hub",
+      #                    "token" => "dcbb7b36acd4438d07abafb8e28605a4",
+      #                    "integration[username]" => "R2D2"
+      #                    "integration[password]" => "fdsjfsho7h23orfesk")
+      #
+      #   resp.status
+      #   => 200
+      #
+      #   resp.body
+      #   => {"git_hub": {"id": 9, "api_key": "sdasdf32rfefs32", "service": "GitHub"}}
+      #
+      #   resp = conn.post("/api/v1/integrations/git_hub",
+      #                    "token" => "dcbb7b36acd4438d07abafb8e28605a4",
+      #                    "integration[username]" => "R2D2"
+      #                    "integration[api_key]" => "osdf659234sdffd3sjfsh234o7h23orfe3sk")
+      #
+      #   resp.status
+      #   => 200
+      #
+      #   resp.body
+      #   => {"git_hub": {"id": 10, "api_key": "osdf659234sdffd3sjfsh234o7h23orfe3sk", "service": "GitHub"}}
+      #
+      #   resp = conn.post("/api/v1/integrations/pivotal_tracker",
+      #                    "token" => "dcbb7b36acd4438d07abafb8e28605a4",
+      #                    "integration[username]" => "R2D2"
+      #                    "integration[password]" => "wrongpassword")
+      #
+      #   resp.status
+      #   => 422
+      #
+      #   resp.body
+      #   => {"git_hub": {"api_key": "wrong token", "errors": { "api_key": ["Is invalid"] }}}
+      #
+      def jira
+        options = (params[:integration] || {}).merge({user_id: @current_user.id})
+        @integration = IntegrationsFactory.new(JIRAIntegration.new, options).create
+        if @integration.save
+          render '_show'
+        else
+          render '_show', status: 422
+        end
+      end
+
+      ##
       # Deletes integration
       #
       # DELETE /api/v1/integrations/:id

@@ -1,6 +1,6 @@
 class IntegrationsFactory < Factory
 
-  VALID_CLASSES = %w[PivotalTrackerIntegration GitHubIntegration]
+  VALID_CLASSES = %w[PivotalTrackerIntegration GitHubIntegration JIRAIntegration]
   VALID_ATTRIBUTES = %w[api_key username email password user_id]
 
   def create

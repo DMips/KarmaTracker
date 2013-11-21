@@ -15,6 +15,11 @@ json.set! integration.to_snake_case do
     json.password integration.password
   end
 
+  if integration.is_a?(JIRAIntegration) && !integration.persisted? && !integration.valid? && (integration.username.present? || integration.password.present?)
+    json.username integration.username
+    json.password integration.password
+  end
+
   unless integration.persisted? || integration.valid?
     json.errors integration.errors.messages
   end

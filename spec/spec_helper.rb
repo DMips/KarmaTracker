@@ -99,7 +99,7 @@ def reset_fakeweb_urls
     :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'authorization_success.json')),
     :status => ['201', 'OK'])
 
-  FakeWeb.register_uri(:get, 'https://api.github.com/user/subscriptions',
+  FakeWeb.register_uri(:get, 'www.pivotaltracker.com/services/v4/me',
     :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'repos.json')),
     :status => ['200', 'OK'])
 
@@ -115,6 +115,22 @@ def reset_fakeweb_urls
     :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'user.json')),
     :status => ['200', 'OK'])
 
+  #JIRA URIs
+  FakeWeb.register_uri(:get, 'https://wrong_email:wrong_password@www.jira.atlassian.com/rest/auth/latest/session',
+    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'jira', 'responses', 'authorization_failed.json')),
+    :status => ['401', 'Unauthorized'])
+
+  FakeWeb.register_uri(:get, 'https://correct_email%40example.com:correct_password@www.jira.atlassian.com/rest/auth/latest/session',
+    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'jira', 'responses', 'authorization_success.json')),
+    :status => ['200', 'OK'])
+
+  FakeWeb.register_uri(:get, 'https://www.jira.atlassian.com/rest/api/2/project',
+    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'jira', 'responses', 'project.json')),
+    :status => ['200', 'OK'])
+
+  FakeWeb.register_uri(:get, /https:\/\/www\.jira\.atlassian\/.com\/rest\/api\/2\/issue\/[10000-10015]/,
+    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'jira', 'responses', 'issue.json')),
+    :status => ['200', 'OK'])
 end
 
 #TODO use this method isstead of allowing all connections

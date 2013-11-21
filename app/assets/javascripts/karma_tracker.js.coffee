@@ -8,6 +8,7 @@
 #= require integrations
 #= require pivotal_tracker_integrations
 #= require git_hub_integrations
+#= require jira_integrations
 #= require account
 #= require timesheet
 #= require tasks
@@ -304,7 +305,7 @@ KarmaTracker.directive "pullToRefresh", ($rootScope) ->
 KarmaTracker.filter 'startFrom', ->
   (input, start) ->
     start = +start
-    input.slice start 
+    input.slice start
 
 
 # This controller just has to redirect user to proper place

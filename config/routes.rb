@@ -25,6 +25,7 @@ KarmaTracker::Application.routes.draw do
         collection do
           post :pivotal_tracker
           post :git_hub
+          post :jira
         end
       end
 
