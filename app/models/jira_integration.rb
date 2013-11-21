@@ -39,6 +39,7 @@ class JIRAIntegration < Integration
     req.basic_auth username, password
     req.body = '{"scopes": ["user", "public_repo", "repo"]}'
     res = https.request(req)
+    puts res.body
     token = JSON.parse(res.body)["value"]
     if token.present?
       self.api_key = token
