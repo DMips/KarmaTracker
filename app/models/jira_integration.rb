@@ -39,17 +39,13 @@ class JIRAIntegration < Integration
     req["Content-Type"] = "application/json"
     req.basic_auth username, password
     res = https.request(req)
-    puts res.code
-    puts res.body
-    token = JSON.parse(res.body)["value"]
-    if token.present?
-      self.api_key = token
-      self.source_id = username
+    if res.code == '200'
+      self.source_id = JSON.parse(res.body)["name"]
     else
       errors.add(:password, 'provided username/password combination is invalid')
     end
   rescue StandardError => e
-    Rails.logger.warn "Exception when validating Github integration: #{e.class}: #{e.message}"
+    Rails.logger.warn "Exception when validating JIRA integration: #{e.class}: #{e.message}"
 
     errors.add(:password, 'provided username/password combination is invalid')
   end
