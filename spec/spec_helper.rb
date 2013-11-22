@@ -99,7 +99,7 @@ def reset_fakeweb_urls
     :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'authorization_success.json')),
     :status => ['201', 'OK'])
 
-  FakeWeb.register_uri(:get, 'www.pivotaltracker.com/services/v4/me',
+  FakeWeb.register_uri(:get, 'https://api.github.com/user/subscriptions',
     :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'repos.json')),
     :status => ['200', 'OK'])
 
