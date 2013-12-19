@@ -17,9 +17,13 @@ KarmaTracker::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
+  config.eager_load = true
+  config.active_record.migration_error = :page_load
+
   # Compress JavaScripts and CSS
   config.assets.compress = true
-  config.assets.js_compressor = NoCompression.new
+
+  config.assets.js_compressor = :uglifier
   config.assets.css_compressor = NoCompression.new
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
@@ -72,7 +76,7 @@ KarmaTracker::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-  
+
 
   config.action_mailer.default_url_options = { host: "karma.amberbit.com" }
 end
