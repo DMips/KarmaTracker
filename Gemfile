@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
 source 'http://torquebox.org/rubygems/'
 
-gem 'rails', git: "git://github.com/BartlomiejSkwira/rails.git", branch: "3-2-stable"
+gem 'rails', '4.0.0'
 gem 'rails-api'
 gem 'jbuilder', '~> 1.5.0'
 
-gem 'activerecord-jdbc-adapter', '~> 1.2.9.1'
+gem 'rails4_upgrade'
+
+gem 'activerecord-jdbc-adapter', '~> 1.3.2', platform: :jruby
 gem 'activerecord-jdbcpostgresql-adapter'
 
 gem 'torquebox', '3.0.1'
@@ -19,8 +21,8 @@ gem 'nokogiri'
 gem 'nori'
 
 gem 'zurb-foundation', '~> 4.0.0'
-gem 'coffee-rails'
-gem 'sass-rails',   '~> 3.2.3'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'sass-rails',   '~> 4.0.0'
 gem 'uglifier', '>= 1.0.3'
 
 #elasticsearch
@@ -39,6 +41,18 @@ gem 'acts_as_list'
 gem 'omniauth', '~> 1.1.0'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-github', '~> 1.1.1'
+
+
+#needed for rails4 upgrade
+gem 'protected_attributes'
+gem 'activeresource', github: 'rails/activeresource'
+gem 'actionpack-action_caching', github: 'rails/actionpack-action_caching'
+gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'
+gem 'activerecord-session_store'
+gem 'rails-observers'
+gem 'actionview-encoded_mail_to'
+gem 'rails-perftest'
+gem 'actionpack-xml_parser', github: 'rails/actionpack-xml_parser'
 
 
 group :test do
