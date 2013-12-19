@@ -55,8 +55,8 @@ KarmaTracker::Application.routes.draw do
     end
   end
 
-  match '/404' => 'errors#not_found'
-  match '/500' => 'errors#exception'
+  match '/404' => 'errors#not_found', via: :get
+  match '/500' => 'errors#exception', via:  :get
   match '/auth/github/callback/identity' => 'api/v1/session#github_identity_endpoint', via: :get
   match '/auth/:provider/callback' => 'api/v1/session#oauth', via: :get
   match '/auth/failure' => 'api/v1/session#failure', via: :get
