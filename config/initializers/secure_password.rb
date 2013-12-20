@@ -37,8 +37,8 @@ module ActiveModel
       #   user.save                                                      # => true
       #   user.authenticate('notright')                                  # => false
       #   user.authenticate('mUc3m00RsqyRe')                             # => user
-      #   User.find_by_name('david').try(:authenticate, 'notright')      # => false
-      #   User.find_by_name('david').try(:authenticate, 'mUc3m00RsqyRe') # => user
+      #   User.find_by(name: 'david').try(:authenticate, 'notright')      # => false
+      #   User.find_by(name: 'david').try(:authenticate, 'mUc3m00RsqyRe') # => user
       def has_secure_password(options = {})
         # Load bcrypt-ruby only when has_secure_password is used.
         # This is to avoid ActiveModel (and by extension the entire framework)
@@ -50,7 +50,7 @@ module ActiveModel
 
         if options.fetch(:validations, true)
           validates_confirmation_of :password
-          validates_presence_of     :password, :on => :create
+          validates_presence_of     :password, on: :create
 
           before_create { raise "Password digest missing on new record" if password_digest.blank? }
         end

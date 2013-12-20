@@ -49,7 +49,7 @@ class GitHubProjectsFetcher
 
       collaborators.each do |collaborator|
         next unless collaborator['login']
-        gh_integration = GitHubIntegration.find_by_source_id(collaborator['login'])
+        gh_integration = GitHubIntegration.find_by(source_id: collaborator['login'])
         integrations << gh_integration if gh_integration.present?
       end
     end while uri

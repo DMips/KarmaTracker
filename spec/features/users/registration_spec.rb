@@ -12,9 +12,9 @@ feature 'User registration', register: true do
     page.should have_content("Register")
     click_link 'Register'
     wait_until(10) { page.has_css? '#password_confirmation' }
-    fill_in 'email', :with => 'user123@example.com'
-    fill_in 'password', :with => 'password'
-    fill_in 'password_confirmation', :with => 'password'
+    fill_in 'email', with: 'user123@example.com'
+    fill_in 'password', with: 'password'
+    fill_in 'password_confirmation', with: 'password'
     click_button 'Register'
 
     wait_until(20) { page.has_content? 'An e-mail was sent to confirm your address' }
@@ -32,8 +32,8 @@ feature 'User registration', register: true do
     user = FactoryGirl.create :user
     user.update_attribute :confirmation_token, nil
     visit root_path
-    fill_in 'email', :with => user.email
-    fill_in 'password', :with => 'secret123'
+    fill_in 'email', with: user.email
+    fill_in 'password', with: 'secret123'
     click_button 'Sign in!'
     page.should have_content "Projects"
   end

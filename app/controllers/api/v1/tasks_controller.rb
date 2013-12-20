@@ -32,7 +32,7 @@ module Api
       #   => {"message": "Resource not found"}
       #
       def show
-        @task = Task.find_by_id(params[:id])
+        @task = Task.find_by(id: params[:id])
         if @task.present? && @api_key.user.projects.include?(@task.project)
           render '_show'
         else

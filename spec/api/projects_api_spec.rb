@@ -102,8 +102,8 @@ describe 'Projects API' do
     Project.count.should == 6
 
     FakeWeb.register_uri(:get, 'https://www.pivotaltracker.com/services/v5/projects',
-      :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'projects2.json')),
-      :status => ['200', 'OK'])
+      body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'projects2.json')),
+      status: ['200', 'OK'])
     api_get "projects/refresh", {token: ApiKey.last.token}
     response.status.should == 200
 
@@ -285,7 +285,7 @@ describe 'Projects API' do
   # POST /api/v1/projects/:id/pivotal_tracker_activity_web_hook
   it 'should return 401 if no token was provided' do
     api_post "projects/#{Project.last.id}/pivotal_tracker_activity_web_hook",
-    :body => File.read(Rails.root.join('spec','fixtures','pivotal_tracker','activities','story_create.json'))
+    body: File.read(Rails.root.join('spec','fixtures','pivotal_tracker','activities','story_create.json'))
     response.status.should == 401
     resp = JSON.parse(response.body)
     resp.should have_key("message")
@@ -298,7 +298,7 @@ describe 'Projects API' do
     project2 = FactoryGirl.create :project
 
     api_post "projects/#{project.id}/pivotal_tracker_activity_web_hook?token=#{project2.web_hook_token}",
-    :body => File.read(Rails.root.join('spec','fixtures','pivotal_tracker','activities','story_create.json'))
+    body: File.read(Rails.root.join('spec','fixtures','pivotal_tracker','activities','story_create.json'))
     response.status.should == 401
     resp = JSON.parse(response.body)
     resp.should have_key("message")

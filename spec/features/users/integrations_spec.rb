@@ -18,8 +18,8 @@ feature 'Integrations management', js: true do
   scenario 'adds and removes new Pivotal Tracker integration with credentials' do
     click_link 'add_new_pt'
     within 'div#ptform' do
-      fill_in 'email', :with => 'correct_email@example.com'
-      fill_in 'password', :with => 'correct_password'
+      fill_in 'email', with: 'correct_email@example.com'
+      fill_in 'password', with: 'correct_password'
       click_button "Add new integration"
     end
     page.should have_content 'API Key'
@@ -31,7 +31,7 @@ feature 'Integrations management', js: true do
     click_link 'add_new_pt'
     find('a', text: "API Key").click
     within 'div#ptform' do
-      fill_in 'token', :with => 'correct_token'
+      fill_in 'token', with: 'correct_token'
       click_button "Add new integration"
     end
     page.should have_content 'API Key'
@@ -43,8 +43,8 @@ feature 'Integrations management', js: true do
   scenario 'adds and removes new Git Hub integration with credentials' do
     click_link 'add_new_gh'
     within 'div#ghform' do
-      fill_in 'username', :with => 'correct_username@example.com'
-      fill_in 'password', :with => 'correct_password'
+      fill_in 'username', with: 'correct_username@example.com'
+      fill_in 'password', with: 'correct_password'
       click_button "Add new integration"
     end
     page.should have_content 'API Key'
@@ -56,7 +56,7 @@ feature 'Integrations management', js: true do
     click_link 'add_new_gh'
     find('a', text: "API Key").click
     within 'div#ghform' do
-      fill_in 'token', :with => 'correct_token'
+      fill_in 'token', with: 'correct_token'
       click_button "Add new integration"
     end
     page.should have_content 'API Key'

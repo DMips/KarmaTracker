@@ -22,6 +22,7 @@ as a user I can', js: true  do
   end
 
   scenario 'see a list of all my projects on archive page' do
+    binding.pry
     page.should have_content project1.name
     page.should have_content project2.name
     page.should_not have_content project3.name

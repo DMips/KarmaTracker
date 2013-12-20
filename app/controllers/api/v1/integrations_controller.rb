@@ -82,7 +82,7 @@ module Api
       #   => {"message": "Resource not found"}
       #
       def show
-        @integration = Integration.find_by_id(params[:id])
+        @integration = Integration.find_by(id: params[:id])
         if @integration && @integration.user.api_key == @api_key
           render '_show'
         else
@@ -230,7 +230,7 @@ module Api
       #   => {"message": "Resource not found"}
       #
       def destroy
-        @integration = Integration.find_by_id(params[:id])
+        @integration = Integration.find_by(id: params[:id])
         if @integration && @integration.user.api_key == @api_key
           @integration.delete
           render '_show'

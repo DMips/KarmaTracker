@@ -82,7 +82,7 @@ describe 'Session API (signing into the system)' do
     expect {
       get "auth/github/callback", provider: 'github'
     }.to change{ Integration.count }.by(1)
-    user = User.find_by_email OmniAuth.config.mock_auth[:github].info.email
+    user = User.find_by(email: OmniAuth.config.mock_auth[:github].info.email)
     user.integrations.count.should == 1
     user.integrations.last.type.should == 'GitHubIntegration'
   end

@@ -41,7 +41,7 @@ class PivotalTrackerProjectsFetcher
       if repos.instance_of?(Array)
         repos.each do |membership|
           pt_id = membership["person"]["id"].to_s
-          integration = PivotalTrackerIntegration.find_by_source_id(pt_id)
+          integration = PivotalTrackerIntegration.find_by(source_id: pt_id)
           integrations << integration if integration.present?
         end
       end

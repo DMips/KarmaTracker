@@ -1,14 +1,14 @@
 class Integration < ActiveRecord::Base
   attr_accessible :api_key, :user, :user_id, :source_id, :last_projects_refresh_at
 
-  validates_uniqueness_of :api_key, :scope => :type
-  validates_uniqueness_of :source_id, :scope => :type
+  validates_uniqueness_of :api_key, scope: :type
+  validates_uniqueness_of :source_id, scope: :type
   validates :type, presence: true
   validates :user, presence: true
 
   belongs_to :user
   has_many :participations, dependent: :destroy
-  has_many :projects, :through => :participations
+  has_many :projects, through: :participations
 
   after_create :fetch_projects
 
@@ -21,7 +21,7 @@ class Integration < ActiveRecord::Base
   def self.by_service(service)
     service = service.camelize
     sevice = service.concat('Integration') unless service =~ /Integration\z/
-    where(:type => service)
+    where(type: service)
   end
 
   def to_snake_case

@@ -31,8 +31,8 @@ describe 'GitHubProjectsFetcher' do
 
   it 'should remove integrations that are no longer participants in a project' do
   FakeWeb.register_uri(:get, /https:\/\/api\.github\.com\/repos\/.*\/.*\/collaborators/,
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'collaborators2.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'collaborators2.json')),
+    status: ['200', 'OK'])
 
     @fetcher.fetch_projects(@integration)
     Integration.count.should == 2
@@ -70,8 +70,8 @@ describe 'GitHubProjectsFetcher' do
     Task.last.current_task.should be_true
 
     FakeWeb.register_uri(:get, /https:\/\/api\.github\.com\/repos\/.*\/.*\/issues\?state\=closed/,
-      :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'issues2.json')),
-      :status => ['200', 'OK'])
+      body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'issues2.json')),
+      status: ['200', 'OK'])
 
     @fetcher.fetch_projects(@integration)
     @fetcher.fetch_tasks_for_project(@integration.projects.last, @integration)
@@ -83,7 +83,7 @@ describe 'GitHubProjectsFetcher' do
     #stubbing doesn't work, always returns 200 OK
     FakeWeb.clean_registry
     FakeWeb.register_uri(:get, /https:\/\/api\.github\.com\/user\/subscriptions/,
-      :body => {"message"=>"Bad credentials"}, status: ['401', 'Unauthorized'])
+      body: {"message"=>"Bad credentials"}, status: ['401', 'Unauthorized'])
     @fetcher.fetch_projects(@integration)
     Task.count.should == 2
     Project.last.tasks.count.should == 1

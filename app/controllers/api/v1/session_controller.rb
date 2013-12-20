@@ -48,7 +48,7 @@ module Api
 
 
       ##
-      # Callback method for OmniAuth (Google, Github etc) login HTTP (not json!) callbacks. Extract user data, creates/updates user with 
+      # Callback method for OmniAuth (Google, Github etc) login HTTP (not json!) callbacks. Extract user data, creates/updates user with
       # token login and expire time. Get or create user. Redirects to '#/oauth' page
       #
       # GET /auth/:provider/callback
@@ -62,7 +62,7 @@ module Api
         if data.nil?
           render json: {message: 'OmniAuth authentication failed'}, status: 401
         else
-          user = User.find_by_email data.info.email
+          user = User.find_by(email: data.info.email)
           if user.nil?
             password = SecureRandom.hex(6)
             user = User.new(email: data.info.email, password: password)
@@ -107,7 +107,7 @@ module Api
       #
       def oauth_verify
         if params[:email].present? && params[:token].present?
-          @user = User.find_by_email params[:email]
+          @user = User.find_by(email: params[:email])
           if @user.present? && @user.oauth_token.present? && @user.oauth_token == params[:token]
             if @user.oauth_token_expires_at.nil? || @user.oauth_token_expires_at > Time.now
               @user.update_column :oauth_token, nil
