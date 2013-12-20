@@ -169,7 +169,7 @@ module Api
         project = Project.find(params[:id])
         integration = @api_key.user.integrations.joins(:participations).
           where('participations.project_id = ?', project.id).
-          all(readonly: false).first
+          readonly(false).first
         if project && integration &&  @api_key.user.projects.include?(project)
           ProjectsFetcher.new.background.fetch_for_project(project, integration)
           render json: {message: 'Project list refresh started'}, status: 200
@@ -427,7 +427,7 @@ module Api
         project = Project.find_by(id: params[:id])
         integration = @api_key.user.integrations.joins(:participations).
           where('participations.project_id = ?', project.id).
-          all(readonly: false).first
+          readonly(false).first
         if project && integration && @api_key.user.projects.include?(project) && PivotalTrackerActivityWebHook.new(project).create_web_hook_request(integration)
           render json: {message: 'Creating web hook started'}, status: 200
         else
@@ -455,7 +455,7 @@ module Api
       #{"webhook_version": "v5","kind": "webhook","created_at": "2013-09-13T12:00:00Z","updated_at": "2013-09-13T12:00:00Z", "webhook_url": "http:/some.web.hook.url.com","project_id": 99, "id": 27}]
       def pivotal_tracker_get_web_hook_integration
         project = Project.find_by(id: params[:id])
-        integration = @api_key.user.integrations.joins(:participations).where('participations.project_id = ?', project.id).all(readonly: false).first
+        integration = @api_key.user.integrations.joins(:participations).where('participations.project_id = ?', project.id).readonly(false).first
 
         if project && integration && @api_key.user.projects.include?(project) && data = PivotalTrackerActivityWebHook.new(project).get_web_hook_integration(integration)
           render json: {message: 'Getting web hook started', web_hook_exists: data}, status: 200
