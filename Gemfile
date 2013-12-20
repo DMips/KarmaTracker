@@ -4,7 +4,6 @@ source 'http://torquebox.org/rubygems/'
 gem 'rails', '4.0.0'
 gem 'rails-api'
 gem 'jbuilder', '~> 1.5.0'
-
 gem 'rails4_upgrade'
 
 gem 'activerecord-jdbc-adapter', '~> 1.3.2', platform: :jruby
@@ -44,7 +43,6 @@ gem 'omniauth-github', '~> 1.1.1'
 
 
 #needed for rails4 upgrade
-gem 'protected_attributes'
 gem 'activeresource', github: 'rails/activeresource'
 gem 'actionpack-action_caching', github: 'rails/actionpack-action_caching'
 gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'

@@ -76,7 +76,7 @@ module Api
       #
       def create
         if AppConfig.users.allow_register
-          @user = UsersFactory.new(User.new, params[:user]).create
+          @user = UsersFactory.new(User.new, user_params).create
 
           if @user.save
             UserMailer.confirmation_email(@user, request.host).deliver
@@ -128,7 +128,8 @@ module Api
       #                "errors": {"email":["has already been taken"],"password":["is too short (minimum is 8 characters)"]}}}"
       #
       def update
-        @user = UsersFactory.new(@user, params[:user]).update
+
+        @user = UsersFactory.new(@user, user_params).update
 
         if @user.save
           render '_show'
@@ -226,6 +227,9 @@ module Api
         @user = @current_user
       end
 
+      def user_params
+        params.require(:user).permit(:email, :password)
+      end
     end
   end
 end

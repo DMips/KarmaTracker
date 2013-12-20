@@ -96,7 +96,7 @@ module Api
       #
       def create
         new_entry = @current_user.time_log_entries.build
-        @time_log_entry = TimeLogEntriesFactory.new(new_entry, params[:time_log_entry]).create
+        @time_log_entry = TimeLogEntriesFactory.new(new_entry, timeLogEntries_params).create
 
         if !@time_log_entry.task || !@time_log_entry.task.project.in?(@current_user.projects)
           render json: {message: 'Resource not found'}, status: 404
@@ -203,6 +203,12 @@ module Api
         else
           render json: {message: 'Resource not found'}, status: 404
         end
+      end
+
+      private
+
+      def timeLogEntries_params
+        params.require(:time_log_entry).permit(:task, :task_id, :user, :user_id, :running, :started_at, :stopped_at, :seconds)
       end
 
     end

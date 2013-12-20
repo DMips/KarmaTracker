@@ -32,8 +32,6 @@ class TimeLogEntry < ActiveRecord::Base
     #scope :overlapped_by_timestamp, ->(t) { }
   end
 
-  attr_accessible :task, :task_id, :user, :user_id, :running, :started_at, :stopped_at, :seconds
-
   belongs_to :task
   belongs_to :user
 

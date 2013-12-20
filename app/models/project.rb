@@ -19,8 +19,6 @@ class Project < ActiveRecord::Base
     end
   end
 
-  attr_accessible :name, :source_name, :source_identifier, :web_hook, :web_hook_token, :web_hook_time, :web_hook_exists
-
   has_many :participations, dependent: :destroy
   has_many :integrations, :through => :participations, :uniq  => true
   has_many :tasks, :order => "position ASC", dependent: :destroy
@@ -38,7 +36,7 @@ class Project < ActiveRecord::Base
 
   scope :active,  ->(user) { joins('INNER JOIN participations p ON projects.id = p.project_id').
       where('p.integration_id IN(?) AND active', user.integrations.map(&:id)).uniq }
-      
+
   def users
     User.joins('INNER JOIN integrations i ON i.user_id = users.id
                 INNER JOIN participations p ON i.id = p.integration_id').

@@ -3,7 +3,6 @@ require 'net/https'
 require 'open-uri'
 
 class PivotalTrackerIntegration < Integration
-  attr_accessible :email, :password
   attr_accessor :email, :password
 
   validate :credentials_correctness, on: :create

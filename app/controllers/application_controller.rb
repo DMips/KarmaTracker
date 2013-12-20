@@ -3,6 +3,8 @@ include ActionController::MimeResponds
 
 class ApplicationController < ActionController::API
 
+  ActionController::API.send :include, ActionController::StrongParameters
+
   private
 
   def restrict_access

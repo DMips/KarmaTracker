@@ -5,7 +5,6 @@ class IntegrationsFactory < Factory
 
   def create
     return Integration.new unless VALID_CLASSES.include?(@object.class.to_s)
-
     attrs = valid_attributes(VALID_ATTRIBUTES)
     @object.assign_attributes attrs
 

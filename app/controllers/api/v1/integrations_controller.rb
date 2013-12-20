@@ -137,7 +137,7 @@ module Api
       #                           "errors": { "password": ["does not match email"] }}}
       #
       def pivotal_tracker
-        options = (params[:integration] || {}).merge({user_id: @current_user.id})
+        options = (pivotalTracker_integration_params || {}).merge({user_id: @current_user.id})
         @integration = IntegrationsFactory.new(PivotalTrackerIntegration.new, options).create
         if @integration.save
           render '_show'
@@ -193,7 +193,7 @@ module Api
       #   => {"git_hub": {"api_key": "wrong token", "errors": { "api_key": ["Is invalid"] }}}
       #
       def git_hub
-        options = (params[:integration] || {}).merge({user_id: @current_user.id})
+        options = (gitHub_integration_params || {}).merge({user_id: @current_user.id})
         @integration = IntegrationsFactory.new(GitHubIntegration.new, options).create
         if @integration.save
           render '_show'
@@ -237,6 +237,16 @@ module Api
         else
           render json: {message: 'Resource not found'}, status: 404
         end
+      end
+
+      private
+
+      def pivotalTracker_integration_params
+        params.require(:integration).permit(:api_key, :email, :password)
+      end
+
+      def gitHub_integration_params
+        params.require(:integration).permit(:api_key, :username, :password)
       end
 
     end

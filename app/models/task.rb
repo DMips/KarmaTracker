@@ -22,9 +22,6 @@ class Task < ActiveRecord::Base
     end
   end
 
-  attr_accessible :project, :project_id, :source_name, :source_identifier,
-                  :current_state, :story_type, :name, :current_task
-
   has_many :time_log_entries, dependent: :nullify
 
   belongs_to :project
