@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'http://torquebox.org/rubygems/'
 
-gem 'rails', '4.0.0'
+gem 'rails', git: "git://github.com/BartlomiejSkwira/rails.git", branch: '4-0-stable'
 gem 'rails-api'
 gem 'jbuilder', '~> 1.5.0'
 gem 'rails4_upgrade'

@@ -20,10 +20,10 @@ class Project < ActiveRecord::Base
   end
 
   has_many :participations, dependent: :destroy
-  has_many :integrations, :through => :participations, :uniq  => true
-  has_many :tasks, :order => "position ASC", dependent: :destroy
+  has_many :integrations, through: :participations, uniq:   true
+  has_many :tasks, order: "position ASC", dependent: :destroy
 
-  validates_uniqueness_of :source_identifier, :scope => :source_name
+  validates_uniqueness_of :source_identifier, scope: :source_name
 
   before_create :generate_web_hook_token
   before_destroy :destroy_web_hook

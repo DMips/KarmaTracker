@@ -16,8 +16,8 @@ I can', js: true do
   end
 
   scenario 'log in' do
-    fill_in 'email', :with => user.email
-    fill_in 'password', :with => 'secret123'
+    fill_in 'email', with: user.email
+    fill_in 'password', with: 'secret123'
     click_button 'Sign in!'
     page.should have_content "Projects"
   end

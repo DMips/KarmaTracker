@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
                        length: { minimum: (AppConfig.users.password_min_chars || 6) },
                        if: :password_digest_changed?
 
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   before_create :generate_tokens
   after_create :create_api_key
@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
   def self.authenticate session
     session ||= {}
-    User.find_by_email(session['email']).try(:authenticate, session['password'])
+    User.find_by(email: session['email']).try(:authenticate, session['password'])
   end
 
   def running_task
@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   private
 
   def create_api_key
-    ApiKey.create :user => self
+    ApiKey.create user: self
   end
 
   def generate_tokens

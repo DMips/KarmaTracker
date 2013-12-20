@@ -35,7 +35,7 @@ describe 'ResetPasswords API' do
       password: new_pass, confirmation: new_pass
     response.status.should == 200
     json['message'].should == 'Password successfully changed'
-    User.find_by_email(user2.email).try(:authenticate, new_pass).should == user2
+    User.find_by(email: user2.email).try(:authenticate, new_pass).should == user2
   end
 
   it 'should add error message to resposne when token generated > 24 ago' do

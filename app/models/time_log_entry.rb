@@ -25,7 +25,7 @@ class TimeLogEntry < ActiveRecord::Base
     scope :after_stopped_at, ->(timestamp) { filters(range: {stopped_at: {gte: timestamp} } ) }
 
     scope :by_project, ->(projects_id) { term(project_id: projects_id) }
-    scope :except_id, ->(ids) { filters(:not => { ids: {values: ids}} ) }
+    scope :except_id, ->(ids) { filters(not: { ids: {values: ids}} ) }
     scope :running, -> { term(running: true) }
 
     #get time_log_entries which are overlapped by timestamp (overlapping parameter)

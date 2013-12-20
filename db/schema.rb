@@ -9,82 +9,85 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131203134837) do
+ActiveRecord::Schema.define(version: 20131203134837) do
 
-  create_table "api_keys", :force => true do |t|
-    t.string   "token",      :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "api_keys", force: true do |t|
+    t.string   "token",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "user_id"
   end
 
-  create_table "integrations", :force => true do |t|
+  create_table "integrations", force: true do |t|
     t.string   "type"
     t.string   "api_key"
     t.integer  "user_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
-    t.string   "source_id",                :null => false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "source_id",                null: false
     t.datetime "last_projects_refresh_at"
   end
 
-  add_index "integrations", ["api_key", "type"], :name => "index_identities_on_api_key_and_type", :unique => true
+  add_index "integrations", ["api_key", "type"], name: "index_identities_on_api_key_and_type", unique: true, using: :btree
 
-  create_table "participations", :force => true do |t|
-    t.integer  "integration_id",                   :null => false
-    t.integer  "project_id",                       :null => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.boolean  "active",         :default => true
+  create_table "participations", force: true do |t|
+    t.integer  "integration_id",                null: false
+    t.integer  "project_id",                    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "active",         default: true
   end
 
-  create_table "projects", :force => true do |t|
-    t.string   "name",                                 :null => false
-    t.string   "source_name",                          :null => false
-    t.string   "source_identifier",                    :null => false
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+  create_table "projects", force: true do |t|
+    t.string   "name",                              null: false
+    t.string   "source_name",                       null: false
+    t.string   "source_identifier",                 null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "web_hook"
     t.string   "web_hook_token"
     t.datetime "web_hook_time"
-    t.boolean  "web_hook_exists",   :default => false
+    t.boolean  "web_hook_exists",   default: false
   end
 
-  add_index "projects", ["source_name", "source_identifier"], :name => "index_projects_on_source_name_and_source_identifier", :unique => true
+  add_index "projects", ["source_name", "source_identifier"], name: "index_projects_on_source_name_and_source_identifier", unique: true, using: :btree
 
-  create_table "tasks", :force => true do |t|
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.integer  "project_id",                           :null => false
-    t.text     "name",                                 :null => false
-    t.string   "source_name",                          :null => false
-    t.string   "source_identifier",                    :null => false
-    t.string   "current_state",                        :null => false
-    t.string   "story_type",                           :null => false
-    t.boolean  "current_task",      :default => false
+  create_table "tasks", force: true do |t|
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "project_id",                        null: false
+    t.text     "name",                              null: false
+    t.string   "source_name",                       null: false
+    t.string   "source_identifier",                 null: false
+    t.string   "current_state",                     null: false
+    t.string   "story_type",                        null: false
+    t.boolean  "current_task",      default: false
     t.integer  "position"
   end
 
-  add_index "tasks", ["source_name", "source_identifier"], :name => "index_tasks_on_source_name_and_source_identifier", :unique => true
+  add_index "tasks", ["source_name", "source_identifier"], name: "index_tasks_on_source_name_and_source_identifier", unique: true, using: :btree
 
-  create_table "time_log_entries", :force => true do |t|
+  create_table "time_log_entries", force: true do |t|
     t.integer  "task_id"
-    t.integer  "user_id",                       :null => false
-    t.boolean  "running",    :default => false
-    t.datetime "started_at",                    :null => false
+    t.integer  "user_id",                    null: false
+    t.boolean  "running",    default: false
+    t.datetime "started_at",                 null: false
     t.datetime "stopped_at"
-    t.integer  "seconds",    :default => 0,     :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.integer  "seconds",    default: 0,     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: true do |t|
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "confirmation_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
@@ -94,6 +97,6 @@ ActiveRecord::Schema.define(:version => 20131203134837) do
     t.string   "refreshing"
   end
 
-  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
 
 end

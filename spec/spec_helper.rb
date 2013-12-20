@@ -69,63 +69,63 @@ def reset_fakeweb_urls
   FakeWeb.allow_net_connect = false
 
   FakeWeb.register_uri(:get, 'https://wrong_email:wrong_password@www.pivotaltracker.com/services/v5/me',
-    :body => 'Access Denied', :status => ['401', 'Unauthorized'])
+    body: 'Access Denied', status: ['401', 'Unauthorized'])
 
   FakeWeb.register_uri(:get, 'https://correct_email%40example.com:correct_password@www.pivotaltracker.com/services/v5/me',
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'authorization_success.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'authorization_success.json')),
+    status: ['200', 'OK'])
 
   FakeWeb.register_uri(:get, 'https://www.pivotaltracker.com/services/v5/me',
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'authorization_success.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'authorization_success.json')),
+    status: ['200', 'OK'])
 
   FakeWeb.register_uri(:get, 'https://www.pivotaltracker.com/services/v5/projects',
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'projects.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'projects.json')),
+    status: ['200', 'OK'])
 
   FakeWeb.register_uri(:get, /https:\/\/www\.pivotaltracker\.com\/services\/v5\/projects\/[0-9]+\/memberships/,
-      :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'membership.json')),
-      :status => ['200', 'OK'])
+      body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'membership.json')),
+      status: ['200', 'OK'])
 
   FakeWeb.register_uri(:get, /https:\/\/www\.pivotaltracker\.com\/services\/v5\/projects\/[0-9]+\/stories/,
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'stories.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'stories.json')),
+    status: ['200', 'OK'])
 
   FakeWeb.register_uri(:get, /https:\/\/www\.pivotaltracker\.com\/services\/v5\/projects\/[0-9]+\/iterations\?scope\=current/,
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'current_iteration.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'current_iteration.json')),
+    status: ['200', 'OK'])
 
   FakeWeb.register_uri(:post, /https:\/\/www\.pivotaltracker\.com\/services\/v5\/projects\/[0-9]+\/webhooks/,
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'web_hook.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'web_hook.json')),
+    status: ['200', 'OK'])
 
   FakeWeb.register_uri(:get, /https:\/\/www\.pivotaltracker\.com\/services\/v5\/projects\/[0-9]+\/webhooks/,
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'web_hook.json')),
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'pivotal_tracker', 'responses', 'web_hook.json')),
 
-    :status => ['200', 'OK'])
+    status: ['200', 'OK'])
   # GitHub URIs
   FakeWeb.register_uri(:post, 'https://wrong_username:wrong_password@api.github.com/authorizations',
-    :body => 'Access Denied', :status => ['401', 'Unauthorized'])
+    body: 'Access Denied', status: ['401', 'Unauthorized'])
 
   FakeWeb.register_uri(:post, 'https://correct_username%40example.com:correct_password@api.github.com/authorizations',
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'authorization_success.json')),
-    :status => ['201', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'authorization_success.json')),
+    status: ['201', 'OK'])
 
   FakeWeb.register_uri(:get, 'https://api.github.com/user/subscriptions',
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'repos.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'repos.json')),
+    status: ['200', 'OK'])
 
   FakeWeb.register_uri(:get, /https:\/\/api\.github\.com\/repos\/.*\/.*\/collaborators/,
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'collaborators.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'collaborators.json')),
+    status: ['200', 'OK'])
 
   FakeWeb.register_uri(:get, /https:\/\/api\.github\.com\/repos\/.*\/.*\/issues\?state\=open/,
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'issues.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'issues.json')),
+    status: ['200', 'OK'])
 
   FakeWeb.register_uri(:get, /https:\/\/api\.github\.com\/user/,
-    :body => File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'user.json')),
-    :status => ['200', 'OK'])
+    body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'git_hub', 'responses', 'user.json')),
+    status: ['200', 'OK'])
 
 end
 

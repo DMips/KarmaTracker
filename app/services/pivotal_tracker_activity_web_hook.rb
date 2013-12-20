@@ -10,7 +10,7 @@ class PivotalTrackerActivityWebHook
       return true
     elsif @project.web_hook_time.nil? || @project.web_hook_time < DateTime.now - AppConfig.webhook_check_time
       Rails.logger.info "Getting web hook for PT project #{@project.source_identifier}"
-      @project.update_attributes(:web_hook_time => DateTime.now)
+      @project.update_attributes(web_hook_time: DateTime.now)
 
       web_hook_url = "#{AppConfig.protocol}#{AppConfig.host}/api/v1/projects/#{@project.id}/pivotal_tracker_activity_web_hook?token=#{@project.web_hook_token}"
       uri ="https://www.pivotaltracker.com/services/v5/projects/#{@project.source_identifier}/webhooks"
@@ -19,7 +19,7 @@ class PivotalTrackerActivityWebHook
       json = JSON.parse response.body
       if response.code == '200' && json.any? { |web_hook| web_hook["webhook_url"] == web_hook_url }
         Rails.logger.info "Checking web hook existing for PT project #{@project.source_identifier} finished successfully"
-        @project.update_attributes(:web_hook_exists => true)
+        @project.update_attributes(web_hook_exists: true)
         return true
       else
         Rails.logger.error "Confirm existing for PT project #{@project.source_identifier} failed"
@@ -37,12 +37,12 @@ class PivotalTrackerActivityWebHook
 
     if response.code == '200'
       json = JSON.parse response.body
-      @project.update_attributes(:web_hook_time => DateTime.now, :web_hook_exists => true)
+      @project.update_attributes(web_hook_time: DateTime.now, web_hook_exists: true)
       Rails.logger.info "Creating web hook request for PT project #{@project.source_identifier} finished successfully"
       return true
     else
       Rails.logger.error "Creating web hook request for PT project #{@project.source_identifier} failed"
-      @project.update_attributes(:web_hook_time => DateTime.now)
+      @project.update_attributes(web_hook_time: DateTime.now)
       return false
     end
   end
@@ -79,7 +79,7 @@ class PivotalTrackerActivityWebHook
     task.project = @project
 
     if after_task
-      after_task_position = @project.tasks.find_by_source_identifier(after_task.to_s).position
+      after_task_position = @project.tasks.find_by(source_identifier: after_task.to_s).position
       task.insert_at(after_task_position+1) if task.position.nil? || task.position > after_task_position
       task.insert_at(after_task_position) if task.position.present? && task.position < after_task_position
     elsif before_task && !after_task

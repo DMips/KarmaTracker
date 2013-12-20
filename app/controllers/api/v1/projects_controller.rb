@@ -68,7 +68,7 @@ module Api
       #   => {"message": "Resource not found"}
       #
       def show
-        @project = Project.find_by_id(params[:id])
+        @project = Project.find_by(id: params[:id])
 
         if @project.present? && @api_key.user.projects.include?(@project)
           render '_show'
@@ -208,7 +208,7 @@ module Api
       #   => {"message": "Resource not found"}
       #
       def tasks
-        project = Project.find_by_id(params[:id])
+        project = Project.find_by(id: params[:id])
         if project && @api_key.user.projects.include?(project)
           @items_per_page = AppConfig.items_per_page
 
@@ -250,7 +250,7 @@ module Api
       #   => {"message": "Resource not found"}
       #
       def current_tasks
-        project = Project.find_by_id(params[:id])
+        project = Project.find_by(id: params[:id])
         if project.present? && @api_key.user.projects.include?(project)
           @items_per_page = AppConfig.items_per_page
           @tasks = project.tasks.current
@@ -295,7 +295,7 @@ module Api
       #   => {"message": "Activity processed"}
       #
       def git_hub_activity_web_hook
-        if project = Project.where(source_name: 'GitHub').find_by_web_hook_token(params[:token])
+        if project = Project.where(source_name: 'GitHub').find_by(web_hook_token: params[:token])
           GitHubWebHooksManager.new({project: project}).process_feed request
           render json: {message: 'Activity processed'}, status: 200
         else
@@ -398,7 +398,7 @@ module Api
       #   => {"message": "Resource not found"}
       #
       def pivotal_tracker_activity_web_hook_url
-        project = Project.find_by_id(params[:id])
+        project = Project.find_by(id: params[:id])
         if project.present? && project.users.include?(@api_key.user) && project.source_name == 'Pivotal Tracker'
           render json: {url: "#{pivotal_tracker_activity_web_hook_api_v1_project_url(project)}?token=#{project.web_hook_token}"}, status: 200
         else
@@ -424,7 +424,7 @@ module Api
       #   resp.body
       #   => {"webhook_version": "v5","kind": "webhook","created_at": "2013-11-12T12:00:00Z","updated_at": "2013-11-12T12:00:00Z", "webhook_url": "http:/some.web.hook.url.com","project_id": 99, "id": 28}
       def pivotal_tracker_create_web_hook_integration
-        project = Project.find_by_id(params[:id])
+        project = Project.find_by(id: params[:id])
         integration = @api_key.user.integrations.joins(:participations).
           where('participations.project_id = ?', project.id).
           all(readonly: false).first
@@ -454,7 +454,7 @@ module Api
       #   => [{"webhook_version": "v5","kind": "webhook","created_at": "2013-11-12T12:00:00Z","updated_at": "2013-11-12T12:00:00Z", "webhook_url": "http:/some.web.hook.url.com","project_id": 99, "id": 28},
       #{"webhook_version": "v5","kind": "webhook","created_at": "2013-09-13T12:00:00Z","updated_at": "2013-09-13T12:00:00Z", "webhook_url": "http:/some.web.hook.url.com","project_id": 99, "id": 27}]
       def pivotal_tracker_get_web_hook_integration
-        project = Project.find_by_id(params[:id])
+        project = Project.find_by(id: params[:id])
         integration = @api_key.user.integrations.joins(:participations).where('participations.project_id = ?', project.id).all(readonly: false).first
 
         if project && integration && @api_key.user.projects.include?(project) && data = PivotalTrackerActivityWebHook.new(project).get_web_hook_integration(integration)
@@ -530,7 +530,7 @@ module Api
       #   => {"message": "Resource not found"}
       #
       def toggle_active
-        @project = Project.find_by_id(params[:id])
+        @project = Project.find_by(id: params[:id])
         if @project && @api_key.user.projects.include?(@project)
           @project.toggle_active_for_user(@api_key.user)
           render '_show'
