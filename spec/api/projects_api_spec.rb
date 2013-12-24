@@ -26,7 +26,7 @@ describe 'Projects API' do
     resp['projects'].count.should == 1
     AppConfig.unstub(:items_per_page)
   end
-  
+
   # GET /projects
   it 'should return paginated array of all user\'s projects' do
     AppConfig.stub(:items_per_page).and_return(2)
@@ -433,5 +433,5 @@ describe 'Projects API' do
     resp['project'].should have_key("active")
     resp['project']['active'].should == true
     project.reload.should be_active_for_user(Integration.last.user)
-  end 
+  end
 end

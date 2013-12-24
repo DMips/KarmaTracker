@@ -20,8 +20,8 @@ class Project < ActiveRecord::Base
   end
 
   has_many :participations, dependent: :destroy
-  has_many :integrations, through: :participations, uniq:   true
-  has_many :tasks, order: "position ASC", dependent: :destroy
+  has_many :integrations, -> { uniq }, through: :participations
+  has_many :tasks, -> { order(position: :asc)}, dependent: :destroy
 
   validates_uniqueness_of :source_identifier, scope: :source_name
 

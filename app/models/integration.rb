@@ -12,7 +12,7 @@ class Integration < ActiveRecord::Base
 
   after_create :fetch_projects
 
-  scope :git_hub, where(type: 'GitHubIntegtration')
+  scope :git_hub, -> { where(type: 'GitHubIntegtration') }
 
   def service_name
     # overwrite in subclass

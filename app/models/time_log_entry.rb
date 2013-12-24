@@ -45,7 +45,7 @@ class TimeLogEntry < ActiveRecord::Base
 
   before_save :calculate_logged_time
 
-  scope :running, where(running: true)
+  scope :running, -> { where(running: true) }
 
   def start
     self.running = true
